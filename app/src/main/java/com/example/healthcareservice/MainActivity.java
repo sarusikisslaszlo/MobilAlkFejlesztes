@@ -2,6 +2,7 @@ package com.example.healthcareservice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,21 +10,30 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText userNameET;
+    EditText passwordET;
+
     private static final String LOG_TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userNameET = findViewById(R.id.editTextUserName);
+        passwordET = findViewById(R.id.editTextPassword);
     }
 
     public void login(View view) {
-        EditText username = findViewById(R.id.editTextUserName);
-        EditText password = findViewById(R.id.editTextPassword);
+        String userName = userNameET.getText().toString();
+        String password = passwordET.getText().toString();
 
-        String userNameString = username.getText().toString();
-        String passwordString = password.getText().toString();
+        Log.i(LOG_TAG, "Bejelentkezett: " + userName + ", jelszó: " + password);
+    }
 
-        Log.i(LOG_TAG, "Bejelentkezett: " + userNameString + ", jelszó: " + passwordString);
+    public void register(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+
+        startActivity(intent);
     }
 }
