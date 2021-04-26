@@ -7,4 +7,8 @@
     <string name="email">Email cím</string>
     <string name="passwordAgain">Jelszó megerősítése</string>
     <string name="cancel">Vissza</string>
+    <string name="advertise">Szolgáltatások hírdetése</string>
+    <string name="useServices">Szolgáltatások igénybevétele</string>
+    <string name="loginWithGoogle">Bejelentkezés Google fiókkal</string>
+    <string name="loginAsGuest">Bejelentkezés vandégként</string>
 </resources>

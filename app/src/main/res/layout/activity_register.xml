@@ -10,7 +10,7 @@
         android:id="@+id/registrationTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/default_margin"
         android:text="@string/registration"
         android:textSize="24sp"
         android:layout_alignParentStart="true"
@@ -22,9 +22,9 @@
         android:id="@+id/userNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
         android:hint="@string/username"
         android:inputType="textPersonName"
@@ -37,9 +37,9 @@
         android:id="@+id/userEmailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -52,9 +52,9 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -67,9 +67,9 @@
         android:id="@+id/passwordAgain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
         android:hint="@string/passwordAgain"
         android:inputType="textPassword"
@@ -78,12 +78,34 @@
         android:layout_below="@id/passwordEditText"
         tools:ignore="RtlCompat" />
 
+    <RadioGroup
+        android:id="@+id/accountTypeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_below="@id/passwordAgain">
+        
+        <RadioButton
+            android:id="@+id/advertiserRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/advertise" />
+
+        <RadioButton
+            android:id="@+id/userRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/useServices" />
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/passwordAgain"
-        android:layout_marginTop="50dp"
+        android:layout_below="@+id/accountTypeGroup"
+        android:layout_marginTop="@dimen/default_margin"
         android:layout_centerHorizontal="true">
 
         <Button
