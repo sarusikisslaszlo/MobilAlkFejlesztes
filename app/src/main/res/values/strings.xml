@@ -10,5 +10,83 @@
     <string name="advertise">Szolgáltatások hírdetése</string>
     <string name="useServices">Szolgáltatások igénybevétele</string>
     <string name="loginWithGoogle">Bejelentkezés Google fiókkal</string>
-    <string name="loginAsGuest">Bejelentkezés vandégként</string>
+    <string name="loginAsGuest">Bejelentkezés vendégként</string>
+
+    <string-array name="service_item_names">
+        <item>Fogorvos</item>
+        <item>Fül-orr-gészészeti szakrendelés</item>
+        <item>Ortopédusi szakrendelés</item>
+        <item>Gyógyszer tanácsadási szakrendelés</item>
+        <item>Dietetikusi szakrendelés</item>
+        <item>Belgyógyászati szakrendelés</item>
+        <item>Plasztikai sebészet</item>
+        <item>Szamészet</item>
+        <item>Urulógiai szakrendelés</item>
+        <item>Szájsebészet</item>
+    </string-array>
+
+    <string-array name="service_item_providers">
+        <item>Fogorvos Kft.</item>
+        <item>FOG Kft.</item>
+        <item>OSZ Kft.</item>
+        <item>GYTSZ Kft.</item>
+        <item>DSZ Kft.</item>
+        <item>BSZ Kft.</item>
+        <item>PS Kft.</item>
+        <item>Szemet-Szemért Kft.</item>
+        <item>USZ Kft.</item>
+        <item>Fájni-Fog Kft.</item>
+    </string-array>
+
+    <string-array name="service_item_comments">
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+        <item>HealthCareService</item>
+    </string-array>
+
+    <string-array name="service_item_categories">
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+        <item>Health,Service</item>
+    </string-array>
+
+    <string-array name="service_item_actives">
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+        <item>true</item>
+    </string-array>
+
+    <array name="service_item_images">
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/healthcare</item>
+    </array>
 </resources>
