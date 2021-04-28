@@ -16,10 +16,17 @@ import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ServiceListActivity extends AppCompatActivity {
 
@@ -32,6 +39,9 @@ public class ServiceListActivity extends AppCompatActivity {
     private ServiceItemAdapter mAdapter;
     private FrameLayout redCircle;
     private TextView contentTextView;
+
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mItems;
 
     private int gridNumber = 1;
     private int cartItems = 0;
@@ -56,8 +66,27 @@ public class ServiceListActivity extends AppCompatActivity {
         
         mAdapter = new ServiceItemAdapter(this, mItemList);
         mRecyclerView.setAdapter(mAdapter);
-        
-        initializeData();
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mItems = mFirestore.collection("Items");
+        queryData();
+    }
+
+    private void queryData() {
+        mItemList.clear();
+
+        mItems.orderBy("name").limit(10).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                ServiceItem item = documentSnapshot.toObject(ServiceItem.class);
+                mItemList.add(item);
+            }
+
+            if(mItemList.size() == 0) {
+                initializeData();
+                queryData();
+            }
+            mAdapter.notifyDataSetChanged();
+        });
     }
 
     private void initializeData() {
@@ -68,16 +97,18 @@ public class ServiceListActivity extends AppCompatActivity {
         String[] itemsActive = getResources().getStringArray(R.array.service_item_actives);
         TypedArray itemsImageResource = getResources().obtainTypedArray(R.array.service_item_images);
 
-        mItemList.clear();
-
         for(int i = 0; i< itemsList.length; i++) {
-            String[] categories = itemsCategory[i].split(",");
-            mItemList.add(new ServiceItem(itemsList[i], itemsProvider[i], categories, Boolean.parseBoolean(itemsActive[i]), itemsComment[i], itemsImageResource.getResourceId(i, 0)));
+            List<String> categories = new ArrayList<>(Arrays.asList(itemsCategory[i].split(",")));
+            mItems.add(new ServiceItem(
+                    itemsList[i],
+                    itemsProvider[i],
+                    categories,
+                    Boolean.parseBoolean(itemsActive[i]),
+                    itemsComment[i],
+                    itemsImageResource.getResourceId(i, 0)));
         }
 
         itemsImageResource.recycle();
-
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -145,12 +176,7 @@ public class ServiceListActivity extends AppCompatActivity {
         redCircle = (FrameLayout) rootView.findViewById(R.id.view_alert_red_circle);
         contentTextView = (TextView) rootView.findViewById(R.id.view_alert_count_textview);
 
-        rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onOptionsItemSelected(alertMenuItem);
-            }
-        });
+        rootView.setOnClickListener(v -> onOptionsItemSelected(alertMenuItem));
 
         return super.onPrepareOptionsMenu(menu);
     }

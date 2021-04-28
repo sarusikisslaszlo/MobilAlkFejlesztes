@@ -1,15 +1,20 @@
 package com.example.healthcareservice;
 
+import java.util.List;
+
 public class ServiceItem {
 
     private String name;
     private String providedBy;
-    private String[] caterory;
+    private List<String> caterory;
     private boolean active;
     private String comment;
-    private final int imageResource;
+    private int imageResource;
 
-    public ServiceItem(String name, String providedBy, String[] caterory, boolean active, String comment, int imageResource) {
+    public ServiceItem() {
+    }
+
+    public ServiceItem(String name, String providedBy, List<String> caterory, boolean active, String comment, int imageResource) {
         this.name = name;
         this.providedBy = providedBy;
         this.caterory = caterory;
@@ -26,7 +31,7 @@ public class ServiceItem {
         return providedBy;
     }
 
-    public String[] getCaterory() {
+    public List<String> getCaterory() {
         return caterory;
     }
 
@@ -50,7 +55,7 @@ public class ServiceItem {
         this.providedBy = providedBy;
     }
 
-    public void setCaterory(String[] caterory) {
+    public void setCaterory(List<String> caterory) {
         this.caterory = caterory;
     }
 
@@ -60,5 +65,9 @@ public class ServiceItem {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
     }
 }

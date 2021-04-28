@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -113,19 +115,16 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
             mCommentText = itemView.findViewById(R.id.itemComment);
             mItemImage = itemView.findViewById(R.id.itemImage);
 
-            itemView.findViewById(R.id.subscribeForService).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Activity", "Add bookmark button clicked!");
-                    ((ServiceListActivity)mContext).updateAlertIcon();
-                }
+            itemView.findViewById(R.id.subscribeForService).setOnClickListener(v -> {
+                Log.d("Activity", "Add bookmark button clicked!");
+                ((ServiceListActivity)mContext).updateAlertIcon();
             });
         }
 
         public void bindTo(ServiceItem currentItem) {
             mNameText.setText(currentItem.getName());
             mProviderText.setText(currentItem.getProvidedBy());
-            mCategoryText.setText(Arrays.toString(currentItem.getCaterory()));
+            mCategoryText.setText(StringUtils.join(currentItem.getCaterory(), ", "));
             mCommentText.setText(currentItem.getComment());
 
             Glide.with(mContext).load(currentItem.getImageResource()).into(mItemImage);

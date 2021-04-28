@@ -73,16 +73,13 @@ public class RegisterActivity extends AppCompatActivity {
         String accountType = radioButton.getText().toString();
 
         Log.i(LOG_TAG, "Regisztrált: " + userName + ", email: " + email);
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Log.d(LOG_TAG, "User created successfully.");
-                    startSearchForServices();
-                } else {
-                    Log.d(LOG_TAG, "User wasn't created successfully.");
-                    Toast.makeText(RegisterActivity.this, "User wasn't created successfully: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            if(task.isSuccessful()) {
+                Log.d(LOG_TAG, "User created successfully.");
+                startSearchForServices();
+            } else {
+                Log.d(LOG_TAG, "User wasn't created successfully.");
+                Toast.makeText(RegisterActivity.this, "User wasn't created successfully: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

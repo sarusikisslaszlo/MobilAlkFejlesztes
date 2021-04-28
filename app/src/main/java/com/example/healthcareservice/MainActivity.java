@@ -77,15 +77,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential authCredential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Log.d(LOG_TAG, "Sign in with credential: success");
-                    startSearchForServices();
-                } else {
-                    Log.w(LOG_TAG, "Sign in with credential: failure");
-                }
+        mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, task -> {
+            if(task.isSuccessful()) {
+                Log.d(LOG_TAG, "Sign in with credential: success");
+                startSearchForServices();
+            } else {
+                Log.w(LOG_TAG, "Sign in with credential: failure");
             }
         });
     }
@@ -95,16 +92,13 @@ public class MainActivity extends AppCompatActivity {
         String password = passwordET.getText().toString();
 
         //Log.i(LOG_TAG, "Bejelentkezett: " + userName + ", jelszó: " + password);
-        mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Log.d(LOG_TAG, "User logged in successfully.");
-                    startSearchForServices();
-                } else {
-                    Log.d(LOG_TAG, "User login fail.");
-                    Toast.makeText(MainActivity.this, "User login fail: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
+        mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, task -> {
+            if(task.isSuccessful()) {
+                Log.d(LOG_TAG, "User logged in successfully.");
+                startSearchForServices();
+            } else {
+                Log.d(LOG_TAG, "User login fail.");
+                Toast.makeText(MainActivity.this, "User login fail: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -115,16 +109,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginAsGuest(View view) {
-        mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    Log.d(LOG_TAG, "Anonymus user logged in successfully.");
-                    startSearchForServices();
-                } else {
-                    Log.d(LOG_TAG, "Anonymus user login fail.");
-                    Toast.makeText(MainActivity.this, "Anonymus user login fail: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
+        mAuth.signInAnonymously().addOnCompleteListener(this, task -> {
+            if(task.isSuccessful()) {
+                Log.d(LOG_TAG, "Anonymus user logged in successfully.");
+                startSearchForServices();
+            } else {
+                Log.d(LOG_TAG, "Anonymus user login fail.");
+                Toast.makeText(MainActivity.this, "Anonymus user login fail: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
