@@ -11,6 +11,16 @@
     <string name="useServices">Szolgáltatások igénybevétele</string>
     <string name="loginWithGoogle">Bejelentkezés Google fiókkal</string>
     <string name="loginAsGuest">Bejelentkezés vendégként</string>
+    <string name="save">Mentés</string>
+    <string name="delete">Töltés</string>
+    <string name="add_item">Szolgáltatás hozzáadása</string>
+    <string name="service_name">Szolgáltatás név</string>
+    <string name="provider">Szolgáltató</string>
+    <string name="communal">Közösségi</string>
+    <string name="private_service">Magán</string>
+    <string name="active">Aktív</string>
+    <string name="comment">Megjegyzés</string>
+    <string name="deleteItem">Törlés</string>
 
     <string-array name="service_item_names">
         <item>Fogorvos</item>
@@ -75,6 +85,32 @@
         <item>true</item>
         <item>true</item>
         <item>true</item>
+    </string-array>
+
+    <string-array name="service_item_appointment">
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+        <item>false</item>
+    </string-array>
+
+    <string-array name="service_item_extra_details">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </string-array>
 
     <array name="service_item_images">

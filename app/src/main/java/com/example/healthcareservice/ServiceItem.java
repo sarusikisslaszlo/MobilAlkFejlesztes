@@ -4,12 +4,15 @@ import java.util.List;
 
 public class ServiceItem {
 
+    private String id;
     private String name;
     private String providedBy;
     private List<String> caterory;
     private boolean active;
     private String comment;
-    private int imageResource;
+    private int photo;
+    private String extraDetails;
+    private boolean appointmentRequired;
 
     public ServiceItem() {
     }
@@ -20,7 +23,9 @@ public class ServiceItem {
         this.caterory = caterory;
         this.active = active;
         this.comment = comment;
-        this.imageResource = imageResource;
+        this.photo = imageResource;
+        this.extraDetails = "";
+        this.appointmentRequired = false;
     }
 
     public String getName() {
@@ -44,7 +49,7 @@ public class ServiceItem {
     }
 
     public int getImageResource() {
-        return imageResource;
+        return photo;
     }
 
     public void setName(String name) {
@@ -68,6 +73,30 @@ public class ServiceItem {
     }
 
     public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
+        this.photo = imageResource;
+    }
+
+    public String _getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getExtraDetails() {
+        return extraDetails;
+    }
+
+    public void setExtraDetails(String extraDetails) {
+        this.extraDetails = extraDetails;
+    }
+
+    public boolean isAppointmentRequired() {
+        return appointmentRequired;
+    }
+
+    public void setAppointmentRequired(boolean appointmentRequired) {
+        this.appointmentRequired = appointmentRequired;
     }
 }

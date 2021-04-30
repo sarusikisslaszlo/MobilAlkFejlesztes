@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ItemOperationActivity">
+
+    <TextView
+        android:id="@+id/createItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/add_item"
+        android:textSize="24sp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        tools:ignore="RtlCompat" />
+
+    <EditText
+        android:id="@+id/serviceNameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:ems="10"
+        android:hint="@string/service_name"
+        android:inputType="text"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/createItem"
+        tools:ignore="RtlCompat" />
+
+    <EditText
+        android:id="@+id/serviceProviderET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:ems="10"
+        android:hint="@string/provider"
+        android:inputType="text"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/serviceNameET"
+        tools:ignore="RtlCompat" />
+
+    <CheckBox android:id="@+id/categoryPublicService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:text="@string/communal"
+        android:layout_below="@id/serviceProviderET" />
+
+    <CheckBox android:id="@+id/categoryPrivateService"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_height="wrap_content"
+        android:text="@string/private_service"
+        android:layout_below="@id/categoryPublicService" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchActive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryPrivateService"
+        android:layout_marginTop="@dimen/default_margin"
+        app:backgroundTint="#ff1da1f2"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:checked="false"
+        android:text="@string/active"/>
+
+    <EditText
+        android:id="@+id/commentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:ems="10"
+        android:hint="@string/comment"
+        android:inputType="text"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/switchActive"
+        tools:ignore="RtlCompat" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/commentItem"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:onClick="create" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/cancel"
+            tools:ignore="RtlCompat"
+            android:onClick="cancel"/>
+    </LinearLayout>
+
+</RelativeLayout>

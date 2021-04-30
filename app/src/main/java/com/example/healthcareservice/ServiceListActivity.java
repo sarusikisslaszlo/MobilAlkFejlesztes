@@ -1,11 +1,9 @@
 package com.example.healthcareservice;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +13,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +34,7 @@ import java.util.List;
 public class ServiceListActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = ServiceListActivity.class.getName();
+    private static final int RC_ADD_ITEM = 987;
     private FirebaseUser user;
     private FirebaseAuth mAuth;
 
@@ -39,9 +43,13 @@ public class ServiceListActivity extends AppCompatActivity {
     private ServiceItemAdapter mAdapter;
     private FrameLayout redCircle;
     private TextView contentTextView;
+    private List<ServiceItem> list = new ArrayList<>();
 
     private FirebaseFirestore mFirestore;
     private CollectionReference mItems;
+    private int queryLimit = 10;
+
+    private NotificationHandler mNotificationHandler;
 
     private int gridNumber = 1;
     private int cartItems = 0;
@@ -69,24 +77,68 @@ public class ServiceListActivity extends AppCompatActivity {
 
         mFirestore = FirebaseFirestore.getInstance();
         mItems = mFirestore.collection("Items");
-        queryData();
+        queryData(true);
+        list.clear();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        this.registerReceiver(powerReceiver, intentFilter);
+
+        mNotificationHandler = new NotificationHandler(this);
     }
 
-    private void queryData() {
+    BroadcastReceiver powerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if(action == null) {
+                return;
+            }
+
+            switch (action) {
+                case Intent.ACTION_POWER_CONNECTED:
+                    queryLimit = mItemList.size();
+                    break;
+                case Intent.ACTION_POWER_DISCONNECTED:
+                    queryLimit = 5;
+                    break;
+
+            }
+
+            queryData(true);
+        }
+    };
+
+    private void queryData(boolean active) {
         mItemList.clear();
 
-        mItems.orderBy("name").limit(10).get().addOnSuccessListener(queryDocumentSnapshots -> {
+        mItems.whereEqualTo("active", active).limit(queryLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                 ServiceItem item = documentSnapshot.toObject(ServiceItem.class);
+                item.setId(documentSnapshot.getId());
                 mItemList.add(item);
             }
 
             if(mItemList.size() == 0) {
                 initializeData();
-                queryData();
+                queryData(true);
             }
             mAdapter.notifyDataSetChanged();
         });
+    }
+
+    public void deleteItem(ServiceItem item) {
+        DocumentReference ref = mItems.document(item._getId());
+
+        ref.delete().addOnSuccessListener(success -> {
+            Log.d(LOG_TAG, "Item is successfully deleted: " + item._getId());
+        }).addOnFailureListener(failure -> {
+            Toast.makeText(this, "Item " + item._getId() + " cannot be deleted.", Toast.LENGTH_LONG).show();
+        });
+        queryData(true);
+        mNotificationHandler.cancel();
     }
 
     private void initializeData() {
@@ -95,6 +147,8 @@ public class ServiceListActivity extends AppCompatActivity {
         String[] itemsCategory = getResources().getStringArray(R.array.service_item_categories);
         String[] itemsComment = getResources().getStringArray(R.array.service_item_comments);
         String[] itemsActive = getResources().getStringArray(R.array.service_item_actives);
+        String[] itemsAppointmentRequired = getResources().getStringArray(R.array.service_item_appointment);
+        String[] itemsExtraDetails = getResources().getStringArray(R.array.service_item_extra_details);
         TypedArray itemsImageResource = getResources().obtainTypedArray(R.array.service_item_images);
 
         for(int i = 0; i< itemsList.length; i++) {
@@ -181,13 +235,31 @@ public class ServiceListActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public void updateAlertIcon() {
-        cartItems = (cartItems + 1);
-        if(0 < cartItems) {
-            contentTextView.setText(String.valueOf(cartItems));
-        } else {
-            contentTextView.setText("");
-        }
+    public void updateAlertIcon(ServiceItem item) {
+        if(!list.contains(item)) {
+            list.add(item);
+            cartItems = (cartItems + 1);
+            if(0 < cartItems) {
+                contentTextView.setText(String.valueOf(cartItems));
+            } else {
+                contentTextView.setText("");
+            }
 
+            redCircle.setVisibility((cartItems > 0) ? View.VISIBLE : View.GONE);
+
+            mNotificationHandler.send(item.getName());
+            queryData(true);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(powerReceiver);
+    }
+
+    public void addItem(View view) {
+        Intent intent = new Intent(this, ItemOperationActivity.class);
+        startActivityForResult(intent, RC_ADD_ITEM);
     }
 }

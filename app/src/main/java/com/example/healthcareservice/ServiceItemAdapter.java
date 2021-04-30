@@ -114,11 +114,6 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
             mCategoryText = itemView.findViewById(R.id.itemCategory);
             mCommentText = itemView.findViewById(R.id.itemComment);
             mItemImage = itemView.findViewById(R.id.itemImage);
-
-            itemView.findViewById(R.id.subscribeForService).setOnClickListener(v -> {
-                Log.d("Activity", "Add bookmark button clicked!");
-                ((ServiceListActivity)mContext).updateAlertIcon();
-            });
         }
 
         public void bindTo(ServiceItem currentItem) {
@@ -128,6 +123,11 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
             mCommentText.setText(currentItem.getComment());
 
             Glide.with(mContext).load(currentItem.getImageResource()).into(mItemImage);
+            itemView.findViewById(R.id.subscribeForService).setOnClickListener(v -> {
+                Log.d("Activity", "Add bookmark button clicked!");
+                ((ServiceListActivity)mContext).updateAlertIcon(currentItem);
+            });
+            itemView.findViewById(R.id.deleteService).setOnClickListener(view -> ((ServiceListActivity)mContext).deleteItem(currentItem));
         }
     }
 }
