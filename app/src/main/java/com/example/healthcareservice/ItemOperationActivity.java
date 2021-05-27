@@ -1,6 +1,7 @@
 package com.example.healthcareservice;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -81,10 +83,17 @@ public class ItemOperationActivity extends AppCompatActivity {
     }
 
     public void cancel(View view) {
+        finish();
     }
 
     private void startSearchForServices() {
         Intent intent = new Intent(this, ServiceListActivity.class);
         startActivity(intent);
+    }
+
+    public void update(ServiceItem item) {
+        DocumentReference ref = mItems.document(item._getId());
+
+        //ref.update();
     }
 }

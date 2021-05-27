@@ -21,6 +21,7 @@
     <string name="active">Aktív</string>
     <string name="comment">Megjegyzés</string>
     <string name="deleteItem">Törlés</string>
+    <string name="updateItem">Szerkesztés</string>
 
     <string-array name="service_item_names">
         <item>Fogorvos</item>

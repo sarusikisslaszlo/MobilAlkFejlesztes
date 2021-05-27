@@ -147,8 +147,6 @@ public class ServiceListActivity extends AppCompatActivity {
         String[] itemsCategory = getResources().getStringArray(R.array.service_item_categories);
         String[] itemsComment = getResources().getStringArray(R.array.service_item_comments);
         String[] itemsActive = getResources().getStringArray(R.array.service_item_actives);
-        String[] itemsAppointmentRequired = getResources().getStringArray(R.array.service_item_appointment);
-        String[] itemsExtraDetails = getResources().getStringArray(R.array.service_item_extra_details);
         TypedArray itemsImageResource = getResources().obtainTypedArray(R.array.service_item_images);
 
         for(int i = 0; i< itemsList.length; i++) {
